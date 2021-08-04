@@ -29,8 +29,7 @@ const Body = BaseForm.extend({
       this.save = loc('oie.primaryauth.submit', 'login');
     }
 
-    if (uiSchema.find(schema => schema.name === 'identifier') 
-        && this.settings.get('features.rememberMe')) {
+    if (this._shouldApplyRememberMyUsername(uiSchema)) {
       this._applyRememberMyUsername();
     }
   },
@@ -174,6 +173,11 @@ const Body = BaseForm.extend({
         isPrimaryIdpDisplay
       }
     });
+  },
+
+  _shouldApplyRememberMyUsername(uiSchema) {
+    return (uiSchema.find(schema => schema.name === 'identifier') 
+        && this.settings.get('features.rememberMe'));
   },
 
   /**
